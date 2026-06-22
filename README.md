@@ -14,7 +14,7 @@ Account-level EDA comparison matrix for the NeurIPS 2022 BAF (Bank Account Fraud
 ## Quick start
 
 ```bash
-git clone git@github.com:<your-username>/fraud-detection-eda.git
+git clone https://github.com/kin-mrqz/fraud-detection-eda.git
 cd fraud-detection-eda
 bash scripts/hku/setup_remote_env.sh
 bash scripts/hku/download_baf_data.sh
