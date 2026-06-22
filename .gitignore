@@ -1,0 +1,48 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Tooling caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Local data and experiment outputs
+data/
+results/
+*.csv
+*.parquet
+*.feather
+*.db
+*.sqlite
+
+# Model artifacts (large/generated)
+*.pkl
+*.joblib
+*.pt
+*.bin
+*.onnx
+*.xgb
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+
+# Local secrets and HKU tunnel scripts (never commit)
+.env
+.env.*
+!.env.example
+*.pem
+id_*
+hku_jupyter_tunnel.ps1
+ssh_config.local
