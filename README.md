@@ -44,6 +44,16 @@ bash scripts/hku/run_eda_gap_matrix.sh
 
 Outputs are written locally to `results/eda_matrix/` (not tracked in git).
 
+**Ablation experiments (after main run):**
+
+Once Stage 1 is complete (`stage1_results.csv` and `eda_gap_matrix_executed.ipynb` exist), run preprocessing and variant ablations without redoing EDA or kNN:
+
+```bash
+bash scripts/hku/run_ablation_experiments.sh
+```
+
+This produces `stage2_ablations.csv`, `stage4_variants.csv`, `conclusion.md`, and updates the executed notebook with ablation charts and a plain-language summary (~15–25 min GPU).
+
 ## Data
 
 `scripts/hku/download_baf_data.sh` fetches BAF CSVs from Hugging Face (`jAEhEEkIM/operationbench-baf-raw`) into `data/`:
