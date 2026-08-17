@@ -1,0 +1,47 @@
+[
+  {
+    "label": "f1_on_valid",
+    "cutoff": 0.15,
+    "fp_count": 1072.0,
+    "fpr": 0.011235130744641829,
+    "alert_yield": 0.015354749439814958,
+    "precision": 0.27908540685944855,
+    "recall": 0.29061624649859946,
+    "tp_exposure_dataset_units": 1774.25120664259,
+    "fp_unlock_cost_ops_currency": 7146666.666666667,
+    "fp_check_cost_ops_currency": 1786666.6666666667,
+    "disclaimer": "BAF has no currency column. Exposure uses dataset_amount_units from a numeric proxy column (not HKD). Ops labor costs use hypothetical HKD clerk rates for the HK demo only. Absolute HKD savings are not identified from BAF. See docs/baf_cost_units.md.",
+    "ops_currency": "HKD",
+    "exposure_unit": "dataset_amount_units"
+  },
+  {
+    "label": "block",
+    "cutoff": 0.85,
+    "fp_count": 0.0,
+    "fpr": 0.0,
+    "alert_yield": 9.293392398005019e-05,
+    "precision": 1.0,
+    "recall": 0.0063025210084033615,
+    "tp_exposure_dataset_units": 38.477737011526045,
+    "fp_unlock_cost_ops_currency": 0.0,
+    "fp_check_cost_ops_currency": 0.0,
+    "disclaimer": "BAF has no currency column. Exposure uses dataset_amount_units from a numeric proxy column (not HKD). Ops labor costs use hypothetical HKD clerk rates for the HK demo only. Absolute HKD savings are not identified from BAF. See docs/baf_cost_units.md.",
+    "ops_currency": "HKD",
+    "exposure_unit": "dataset_amount_units"
+  },
+  {
+    "label": "alert",
+    "cutoff": 0.8300000000000001,
+    "fp_count": 0.0,
+    "fpr": 0.0,
+    "alert_yield": 9.293392398005019e-05,
+    "precision": 1.0,
+    "recall": 0.0063025210084033615,
+    "tp_exposure_dataset_units": 38.477737011526045,
+    "fp_unlock_cost_ops_currency": 0.0,
+    "fp_check_cost_ops_currency": 0.0,
+    "disclaimer": "BAF has no currency column. Exposure uses dataset_amount_units from a numeric proxy column (not HKD). Ops labor costs use hypothetical HKD clerk rates for the HK demo only. Absolute HKD savings are not identified from BAF. See docs/baf_cost_units.md.",
+    "ops_currency": "HKD",
+    "exposure_unit": "dataset_amount_units"
+  }
+]

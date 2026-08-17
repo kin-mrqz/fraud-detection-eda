@@ -1,0 +1,14 @@
+{
+  "relative_profit_index": 38.477737011526045,
+  "max_profit": 38.477737011526045,
+  "block_idx": 7,
+  "alert_idx": 8,
+  "block_cutoff": 0.85,
+  "alert_cutoff": 0.8300000000000001,
+  "block_predicted": 9,
+  "alert_predicted": 9,
+  "block_fp": 0.0,
+  "alert_fp": 0.0,
+  "clerks_per_month_estimate": 0.0,
+  "disclaimer": "BAF has no currency column. Exposure uses dataset_amount_units from a numeric proxy column (not HKD). Ops labor costs use hypothetical HKD clerk rates for the HK demo only. Absolute HKD savings are not identified from BAF. See docs/baf_cost_units.md."
+}

@@ -1,0 +1,16 @@
+{
+  "graph": "property",
+  "model": "GNN_to_XGBoost",
+  "pr_auc_test": 0.20762708689568926,
+  "champion_policy": "property_graph_locked",
+  "pr_auc_leader_graph": "none",
+  "pr_auc_leader": 0.2114097419365134,
+  "lift_vs_base_prevalence": 18.825558699400602,
+  "stage1_complete": true,
+  "stage2_complete": true,
+  "stage3_complete": true,
+  "optimal_block_cutoff": 0.85,
+  "optimal_alert_cutoff": 0.8300000000000001,
+  "relative_profit_index": 38.477737011526045,
+  "cost_disclaimer": "BAF has no currency column. Exposure uses dataset_amount_units from a numeric proxy column (not HKD). Ops labor costs use hypothetical HKD clerk rates for the HK demo only. Absolute HKD savings are not identified from BAF. See docs/baf_cost_units.md."
+}

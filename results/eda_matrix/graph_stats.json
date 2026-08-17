@@ -1,0 +1,58 @@
+{
+  "temporal_knn": {
+    "n_nodes": 1000000,
+    "n_edges": 4817411,
+    "density": 4.817415817415818e-06,
+    "avg_degree": 5.883408055319102,
+    "homophily": 0.9785413783461697,
+    "temporal_violations": 0
+  },
+  "property_graph": {
+    "n_application_nodes": 1000000,
+    "n_entity_nodes": 23,
+    "n_edges": 6000000,
+    "avg_app_degree": 6.0,
+    "n_edge_types": 6
+  },
+  "knn_policy": "graph_edges_only_no_tabular_enrichment",
+  "baf_suite": "Base + Variants I\u2013V; variant_6 is Base alias only",
+  "n_raw_features": 30,
+  "n_preprocessed_features": 52,
+  "config": {
+    "seed": "42",
+    "data_dir": "/userhome/cs/khin/Fraud-Detection/data",
+    "data_path": "/userhome/cs/khin/Fraud-Detection/data/base.csv",
+    "stage1_variant": "/userhome/cs/khin/Fraud-Detection/data/base.csv",
+    "stage2_ablation_variant": "/userhome/cs/khin/Fraud-Detection/data/variant_1.csv",
+    "results_dir": "/userhome/cs/khin/Fraud-Detection/results/eda_matrix",
+    "knn_k": "20",
+    "knn_metric": "cosine",
+    "knn_mutual": "False",
+    "use_smote_stage1": "False",
+    "use_yeo_johnson": "True",
+    "recall_at_precision": "0.8",
+    "eda_plot_all_features": "True",
+    "eda_max_plots": "None",
+    "shap_sample_size": "500",
+    "eval_suite": "[('Base', PosixPath('/userhome/cs/khin/Fraud-Detection/data/base.csv')), ('Variant I', PosixPath('/userhome/cs/khin/Fraud-Detection/data/variant_1.csv')), ('Variant II', PosixPath('/userhome/cs/khin/Fraud-Detection/data/variant_2.csv')), ('Variant III', PosixPath('/userhome/cs/khin/Fraud-Detection/data/variant_3.csv')), ('Variant IV', PosixPath('/userhome/cs/khin/Fraud-Detection/data/variant_4.csv')), ('Variant V', PosixPath('/userhome/cs/khin/Fraud-Detection/data/variant_5.csv'))]"
+  },
+  "cost_assumptions": {
+    "clerk_salary_annual": 400000,
+    "hours_per_month": 160,
+    "hours_to_unlock_fp": 32,
+    "hours_to_check_fp": 8,
+    "fraud_volume_proxy_col": "intended_balcon_amount",
+    "exposure_unit": "dataset_amount_units",
+    "exposure_tp_per_account": 4.275304112391783,
+    "ops_currency": "HKD",
+    "ops_currency_is_hypothetical": true,
+    "ops_narrative": "HK_demo",
+    "cost_unlock_fp": 6666.666666666667,
+    "cost_check_fp": 1666.6666666666667,
+    "disclaimer": "BAF has no currency column. Exposure uses dataset_amount_units from a numeric proxy column (not HKD). Ops labor costs use hypothetical HKD clerk rates for the HK demo only. Absolute HKD savings are not identified from BAF. See docs/baf_cost_units.md.",
+    "citations": [
+      "Jesus et al., Turning the Tables\u2026, NeurIPS 2022",
+      "docs/baf_cost_units.md"
+    ]
+  }
+}

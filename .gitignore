@@ -19,8 +19,14 @@ env/
 
 # Local data and experiment outputs
 data/
-results/
+results/*
+!results/eda_matrix/
+results/eda_matrix/*
+!results/eda_matrix/*.json
+!results/eda_matrix/*.md
+!results/eda_matrix/*.csv
 *.csv
+!results/eda_matrix/*.csv
 *.parquet
 *.feather
 *.db

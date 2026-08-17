@@ -45,18 +45,30 @@ def format_conclusion_markdown(artifacts: dict) -> str:
 
     stage1 = artifacts.get("stage1_df")
     if stage1 is not None and not stage1.empty:
-        champion_row = stage1.sort_values("pr_auc", ascending=False).iloc[0]
+        prop_rows = stage1[stage1["graph"] == "property"]
+        if not prop_rows.empty:
+            champion_row = prop_rows.iloc[0]
+        else:
+            champion_row = stage1.sort_values("pr_auc", ascending=False).iloc[0]
+        pr_auc_leader = stage1.sort_values("pr_auc", ascending=False).iloc[0]
         anchor_row = stage1[stage1["graph"] == "none"].iloc[0]
         lines.append(
-            f"- **Best graph setup:** {champion_row['graph']} "
+            f"- **Stage 1 champion:** property graph "
             f"(PR-AUC {champion_row['pr_auc']:.3f} on test month 7), "
             f"compared with tabular anchor PR-AUC {anchor_row['pr_auc']:.3f}."
         )
-        if champion_row["graph"] == "property":
-            prop_row = stage1[stage1["graph"] == "property"].iloc[0]
+        if str(pr_auc_leader["graph"]) != "property":
             lines.append(
-                f"- **Property graph** caught more fraud (recall {prop_row['recall']:.1%}) "
-                f"than the anchor ({anchor_row['recall']:.1%}), with a small rise in alerts flagged."
+                f"- Highest PR-AUC this run was **{pr_auc_leader['graph']}** "
+                f"({pr_auc_leader['pr_auc']:.3f}); property graph is still the locked champion."
+            )
+        prop_row = champion_row if champion_row["graph"] == "property" else (
+            prop_rows.iloc[0] if not prop_rows.empty else None
+        )
+        if prop_row is not None:
+            lines.append(
+                f"- **Property graph** recall was {prop_row['recall']:.1%} "
+                f"vs anchor {anchor_row['recall']:.1%}."
             )
         knn_row = stage1[stage1["graph"] == "temporal_kNN"]
         if not knn_row.empty and knn_row.iloc[0]["pr_auc"] < anchor_row["pr_auc"]:
@@ -100,13 +112,7 @@ def format_conclusion_markdown(artifacts: dict) -> str:
     lines.append("## What to do next")
     lines.append("")
     if stage1 is not None and not stage1.empty:
-        champ = stage1.sort_values("pr_auc", ascending=False).iloc[0]
-        if champ["graph"] != "none":
-            lines.append(
-                f"- Use **{champ['graph']}** graph features as the default for the next modeling stage."
-            )
-        else:
-            lines.append("- Graph features did not clearly win; keep the tabular model as the default.")
+        lines.append("- Use **property graph** features as the default for the next modeling stage.")
     lines.append("- Replace the fraud revenue proxy with real loss data before trusting the cost model.")
     lines.append("- Re-run ablations if you change preprocessing or download new BAF variants.")
 

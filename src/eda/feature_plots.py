@@ -65,13 +65,55 @@ def list_baf_feature_columns(
     return numeric, categorical
 
 
-def _percent_within_class(df: pd.DataFrame, feature: str, target_col: str) -> pd.DataFrame:
+def _str_category_order(series: pd.Series) -> list[str]:
+    """
+    Logical left-to-right order for barplot x labels.
+
+    Matches labels produced by ``astype(str)`` while sorting by numeric value
+    or interval left edge (not lexicographic string order).
+    """
+    s = series.dropna()
+    if s.empty:
+        return []
+
+    if isinstance(s.dtype, pd.CategoricalDtype):
+        cats = list(s.cat.categories)
+        present = set(s.unique())
+        if s.cat.ordered:
+            return [str(c) for c in cats if c in present]
+        if cats and isinstance(cats[0], pd.Interval):
+            cats = sorted(cats, key=lambda iv: (float(iv.left), float(iv.right)))
+            return [str(c) for c in cats if c in present]
+
+    uniq = list(s.unique())
+    first = uniq[0]
+    if isinstance(first, pd.Interval):
+        ordered = sorted(uniq, key=lambda iv: (float(iv.left), float(iv.right)))
+        return [str(x) for x in ordered]
+
+    coerced = pd.to_numeric(pd.Series(uniq), errors="coerce")
+    if coerced.notna().all():
+        ordered = [x for _, x in sorted(zip(coerced.tolist(), uniq), key=lambda t: t[0])]
+        return [str(x) for x in ordered]
+
+    return sorted(str(x) for x in uniq)
+
+
+def _percent_within_class(
+    df: pd.DataFrame,
+    feature: str,
+    target_col: str,
+) -> tuple[pd.DataFrame, list[str]]:
     tmp = df[[target_col, feature]].copy()
+    order = _str_category_order(tmp[feature])
     tmp[feature] = tmp[feature].astype(str)
     agg = tmp.groupby([target_col, feature]).size().reset_index(name="count")
     agg["pct"] = agg.groupby(target_col)["count"].transform(lambda x: x / x.sum())
     agg[target_col] = agg[target_col].map({0: "Non-Fraud", 1: "Fraud"})
-    return agg
+    # Keep only labels still present after groupby (astype can yield "nan")
+    present = set(agg[feature].unique())
+    order = [x for x in order if x in present]
+    return agg, order
 
 
 def draw_features_baf(
@@ -97,10 +139,18 @@ def draw_features_baf(
             try:
                 plot_df[feat] = pd.qcut(series, q=min(10, series.nunique()), duplicates="drop")
             except ValueError:
-                plot_df[feat] = series.astype(str)
-        agg = _percent_within_class(plot_df, feat, target_col)
+                plot_df[feat] = series  # keep numeric dtype for ordered x-axis
+        agg, order = _percent_within_class(plot_df, feat, target_col)
         plt.figure(figsize=(12, 4))
-        sns.barplot(data=agg, x=feat, y="pct", hue=target_col, palette={"Fraud": "darkorange", "Non-Fraud": "steelblue"})
+        sns.barplot(
+            data=agg,
+            x=feat,
+            y="pct",
+            hue=target_col,
+            order=order or None,
+            hue_order=["Non-Fraud", "Fraud"],
+            palette={"Fraud": "darkorange", "Non-Fraud": "steelblue"},
+        )
         plt.title(f"{feat} by fraud_bool — % within class")
         plt.xticks(rotation=30, ha="right")
         plt.ylabel("Share within fraud / non-fraud")

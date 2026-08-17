@@ -19,6 +19,8 @@ RISK_NUMERIC_COLS = [
 
 def _risk_bucket(series: pd.Series, quantiles: tuple[float, float] = (0.33, 0.66)) -> pd.Series:
     q1, q2 = series.quantile(list(quantiles))
+    if q1 >= q2:
+        return pd.Series(np.full(len(series), "low"), index=series.index)
     return pd.cut(series, bins=[-np.inf, q1, q2, np.inf], labels=["low", "mid", "high"]).astype(str)
 
 
@@ -92,23 +94,25 @@ def property_graph_embeddings(
     if edge_df.empty:
         return np.zeros_like(features)
 
-    entity_to_apps: dict[int, list[int]] = {}
-    for _, row in edge_df.iterrows():
-        entity_to_apps.setdefault(int(row["dst"]), []).append(int(row["src"]))
+    apps = edge_df["src"].to_numpy(dtype=np.int64)
+    entities = edge_df["dst"].to_numpy(dtype=np.int64)
+    order = np.argsort(entities, kind="mergesort")
+    apps = apps[order]
+    entities = entities[order]
+    _, starts = np.unique(entities, return_index=True)
+    ends = np.append(starts[1:], len(entities))
 
-    agg = np.zeros_like(features)
+    agg = np.zeros_like(features, dtype=float)
     counts = np.zeros(n_nodes, dtype=float)
-    for apps in entity_to_apps.values():
-        if len(apps) < 2:
+    for start, end in zip(starts, ends):
+        group = apps[start:end]
+        n_group = len(group)
+        if n_group < 2:
             continue
-        for src in apps:
-            for dst in apps:
-                if src == dst:
-                    continue
-                agg[src] += features[dst]
-                counts[src] += 1.0
+        feat_sum = features[group].sum(axis=0)
+        np.add.at(agg, group, feat_sum - features[group])
+        counts[group] += n_group - 1
 
-    for i in range(n_nodes):
-        if counts[i] > 0:
-            agg[i] /= counts[i]
+    nonzero = counts > 0
+    agg[nonzero] /= counts[nonzero, None]
     return agg

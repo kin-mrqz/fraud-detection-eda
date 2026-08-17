@@ -1,0 +1,5 @@
+arm,deck_label,use_yeo_johnson,use_smote,pr_auc,recall
+variant_I,Variant I,True,False,0.21089930281991282,0.33613445378151263
+variant_I,Variant I,True,True,0.19069494206384577,0.24439775910364145
+variant_I,Variant I,False,False,0.2123490357793026,0.3382352941176471
+variant_I,Variant I,False,True,0.18856082565177076,0.265406162464986

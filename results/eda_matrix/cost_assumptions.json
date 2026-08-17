@@ -1,0 +1,19 @@
+{
+  "clerk_salary_annual": 400000,
+  "hours_per_month": 160,
+  "hours_to_unlock_fp": 32,
+  "hours_to_check_fp": 8,
+  "fraud_volume_proxy_col": "intended_balcon_amount",
+  "exposure_unit": "dataset_amount_units",
+  "exposure_tp_per_account": 4.275304112391783,
+  "ops_currency": "HKD",
+  "ops_currency_is_hypothetical": true,
+  "ops_narrative": "HK_demo",
+  "cost_unlock_fp": 6666.666666666667,
+  "cost_check_fp": 1666.6666666666667,
+  "disclaimer": "BAF has no currency column. Exposure uses dataset_amount_units from a numeric proxy column (not HKD). Ops labor costs use hypothetical HKD clerk rates for the HK demo only. Absolute HKD savings are not identified from BAF. See docs/baf_cost_units.md.",
+  "citations": [
+    "Jesus et al., Turning the Tables\u2026, NeurIPS 2022",
+    "docs/baf_cost_units.md"
+  ]
+}
