@@ -25,6 +25,7 @@ results/eda_matrix/*
 !results/eda_matrix/*.json
 !results/eda_matrix/*.md
 !results/eda_matrix/*.csv
+!results/eda_matrix/eda_gap_matrix_executed.ipynb
 *.csv
 !results/eda_matrix/*.csv
 *.parquet
